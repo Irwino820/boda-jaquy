@@ -9,7 +9,7 @@ import { Story } from "@/components/sections/story";
 import { Gallery } from "@/components/sections/gallery";
 import { CountdownSection } from "@/components/sections/countdown-section";
 import { Details } from "@/components/sections/details";
-import { DressCode } from "@/components/sections/dress-code";
+import { Itinerary } from "@/components/sections/itinerary";
 import { Rsvp } from "@/components/sections/rsvp";
 import { Footer } from "@/components/sections/footer";
 import { MusicPlayer } from "@/components/ui/music-player";
@@ -67,7 +67,7 @@ export function Invitation() {
               <Gallery />
               <CountdownSection />
               <Details />
-              <DressCode />
+              <Itinerary />
               <Rsvp />
             </div>
           </main>

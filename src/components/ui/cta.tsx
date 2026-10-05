@@ -8,7 +8,7 @@ type Variant = "solid" | "outline" | "glass";
 
 const VARIANTS: Record<Variant, string> = {
   solid:
-    "bg-ink text-cream hover:bg-ink-raised ring-1 ring-ink/20 shadow-[0_30px_60px_-40px_rgba(22,58,107,0.55)]",
+    "bg-ink text-cream hover:bg-ink-raised ring-1 ring-ink/20 shadow-[0_30px_60px_-40px_rgba(63,74,44,0.55)]",
   outline:
     "text-ink ring-1 ring-ink/20 hover:ring-olive hover:text-olive",
   glass:

@@ -110,11 +110,11 @@ function encodePng(width, height, rgb) {
 /* ------------------------------------------------------------------ palette */
 
 const PALETTE = {
-  deep: [22, 58, 107],
-  cobalt: [43, 94, 168],
-  azure: [74, 126, 199],
-  sky: [214, 228, 245],
-  mist: [248, 250, 252],
+  deep: [63, 74, 44],
+  cobalt: [79, 92, 53],
+  azure: [138, 155, 85],
+  sky: [232, 236, 218],
+  mist: [247, 246, 241],
 };
 
 const mix = (a, b, t) => [
@@ -133,8 +133,8 @@ function smoothstep(edge0, edge1, x) {
 /* -------------------------------------------------------------------- paint */
 
 /**
- * Cada escena se compone de: gradiente base diagonal, fugas de luz azules,
- * discos de bokeh desenfocados y viñeta. Todo en una sola paleta Amalfi.
+ * Cada escena se compone de: gradiente base diagonal, fugas de luz olivo,
+ * discos de bokeh desenfocados y viñeta. Todo en una sola paleta olivo.
  */
 const SCENES = {
   hero: {

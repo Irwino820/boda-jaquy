@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  /* Trío Amalfi: blanco frío + azul cobalto + verde olivo. Sin negros. */
-  --color-ink: #163a6b;
-  --color-ink-raised: #1e4a82;
-  --color-ink-panel: #245694;
-  --color-cream: #f8fafc;
-  --color-clay: #4a5630;
+  /* Paleta olivo: crema cálida + verdes de verde olivo. Sin azules ni negros. */
+  --color-ink: #3f4a2c;
+  --color-ink-raised: #4f5c35;
+  --color-ink-panel: #5c6a3d;
+  --color-cream: #f7f6f1;
+  --color-clay: #2f3820;
   --color-olive: #6b7c3f;
   --color-olive-soft: #9aab6e;
   --color-olive-mist: #d5dec0;
-  --color-azure: #4a7ec7;
-  --color-sky: #d6e4f5;
+  --color-azure: #8a9b55;
+  --color-sky: #e8ecda;
 
   --font-script: var(--font-great-vibes), "Snell Roundhand", cursive;
   --font-display: var(--font-cormorant), "Times New Roman", serif;
@@ -133,7 +133,7 @@ html:not([data-intro-ready]) body::before {
   position: fixed;
   inset: 0;
   z-index: 55;
-  background: #163a6b;
+  background: var(--color-ink);
   pointer-events: none;
 }
 
@@ -160,7 +160,7 @@ html:not([data-intro-ready]) body::before {
   background-color: color-mix(in oklab, currentColor 16%, transparent);
 }
 
-/* Fotografía: velo azul + olivo que se retira al pasar el cursor. */
+/* Fotografía: velo olivo que se retira al pasar el cursor. */
 @utility photo-veil {
   background:
     radial-gradient(
@@ -180,7 +180,7 @@ html:not([data-intro-ready]) body::before {
     );
 }
 
-/* Motivo azulejo Amalfi sutil (pattern CSS). */
+/* Motivo de azulejo sutil en tonos olivo. */
 @utility tile-motif {
   background-color: var(--color-sky);
   background-image:

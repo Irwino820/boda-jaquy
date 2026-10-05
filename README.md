@@ -23,7 +23,7 @@ Todo el contenido editable vive en **`src/config/event.ts`**:
 | `ceremonyAt`              | Fecha y hora en ISO 8601 con offset             |
 | `ceremony`                | Lugar, dirección, ciudad y enlace de Maps      |
 | `story`                   | Eyebrow, líneas del titular y párrafos          |
-| `dressCode`               | Título, descripción y paleta sugerida          |
+| `itinerary`               | Eyebrow, título y momentos del día             |
 | `rsvp`                    | Número de WhatsApp (sin `+`) y textos           |
 | `hashtag`, `footerNote`   | Detalles de cierre                              |
 
@@ -78,7 +78,7 @@ src/
     providers/    smooth-scroll.tsx — Lenis + contexto del motor de scroll
     motion/       reveal.tsx (split text, reveals, stagger)
                   interactions.tsx (magnetismo, media queries, parallax)
-    sections/     hero, story, gallery, countdown, details, dress-code,
+    sections/     hero, story, gallery, countdown, details, itinerary,
                   rsvp, footer, marquee, nav
     ui/           photo, cta, icons, preloader, music-player
 ```

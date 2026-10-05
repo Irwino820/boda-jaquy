@@ -57,10 +57,10 @@ export const photos = {
   dress: {
     id: "dress",
     src: "/photos/pepe-jaquelin-vineyard.jpg",
-    alt: "Referencia de vestimenta elegante casual — vestido claro y look relajado",
+    alt: "Pepe y Jaquelin en el viñedo, el espíritu de la celebración",
     width: 1200,
     height: 1600,
-    caption: "Código de vestimenta",
+    caption: "El día",
   },
   portrait: {
     id: "portrait",

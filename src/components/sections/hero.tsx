@@ -14,8 +14,8 @@ import { Reveal, SplitText } from "@/components/motion/reveal";
 import { useIntroReady } from "@/components/providers/intro";
 
 /**
- * Hero Amalfi limpio: split editorial (texto | arco).
- * Inspirado en la invitación "La Dolce Vita" — sin chrome de más.
+ * Hero olivo limpio: split editorial (texto | arco).
+ * Sin chrome de más.
  */
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -42,7 +42,7 @@ export function Hero() {
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_70%_20%,rgba(214,228,245,0.5),transparent_65%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_70%_20%,rgba(232,236,218,0.55),transparent_65%)]"
       />
 
       <motion.div
@@ -83,7 +83,7 @@ export function Hero() {
           <Reveal delay={0.45} gate={ready} className="mt-5">
             <span
               aria-hidden
-              className="mx-auto block h-4 w-11 bg-[url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 44 16%22 fill=%22none%22%3E%3Cpath d=%22M2 8c5-6 9-6 13 0s9 6 13 0 9-6 13 0%22 stroke=%22%23163A6B%22 stroke-width=%221.15%22 stroke-linecap=%22round%22/%3E%3C/svg%3E')] bg-contain bg-center bg-no-repeat opacity-70 lg:mx-0 lg:bg-left"
+              className="mx-auto block h-4 w-11 bg-[url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 44 16%22 fill=%22none%22%3E%3Cpath d=%22M2 8c5-6 9-6 13 0s9 6 13 0 9-6 13 0%22 stroke=%22%233F4A2C%22 stroke-width=%221.15%22 stroke-linecap=%22round%22/%3E%3C/svg%3E')] bg-contain bg-center bg-no-repeat opacity-70 lg:mx-0 lg:bg-left"
             />
             <p className="mt-4 font-display text-lg text-ink/65 sm:text-xl">
               {date.day} de {date.month}
@@ -116,7 +116,7 @@ export function Hero() {
           <Reveal blur={false} gate={ready} delay={0.3} className="relative">
             <motion.div
               style={{ scale: imageScale }}
-              className="relative mx-auto aspect-[4/5] w-[min(100%,22rem)] overflow-hidden rounded-t-full rounded-b-[1.5rem] ring-1 ring-ink/10 shadow-[0_28px_56px_-36px_rgba(22,58,107,0.4)] sm:w-full sm:max-w-md lg:max-w-none"
+              className="relative mx-auto aspect-[4/5] w-[min(100%,22rem)] overflow-hidden rounded-t-full rounded-b-[1.5rem] ring-1 ring-ink/10 shadow-[0_28px_56px_-36px_rgba(63,74,44,0.4)] sm:w-full sm:max-w-md lg:max-w-none"
             >
               <Photo
                 photo={photos.hero}

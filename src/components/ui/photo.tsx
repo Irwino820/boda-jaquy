@@ -58,7 +58,7 @@ export function Photo({
 }
 
 /**
- * Marco de reserva. Se ve deliberado: azul Amalfi, monograma y el nombre del
+ * Marco de reserva. Se ve deliberado: olivo profundo, monograma y el nombre del
  * archivo que falta, para que se entienda qué hay que reemplazar.
  */
 export function PhotoSlot({ label }: { label: string }) {
@@ -69,7 +69,7 @@ export function PhotoSlot({ label }: { label: string }) {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(90% 70% at 25% 15%, rgba(74,126,199,0.35), transparent 62%), radial-gradient(70% 60% at 85% 88%, rgba(22,58,107,0.45), transparent 60%)",
+            "radial-gradient(90% 70% at 25% 15%, rgba(138,155,85,0.35), transparent 62%), radial-gradient(70% 60% at 85% 88%, rgba(63,74,44,0.45), transparent 60%)",
         }}
       />
       <div

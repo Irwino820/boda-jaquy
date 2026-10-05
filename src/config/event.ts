@@ -19,11 +19,11 @@ export type WeddingEventConfig = {
     lines: string[];
     body: string[];
   };
-  dressCode: {
+  itinerary: {
     eyebrow: string;
     title: string;
     description: string;
-    palette: string[];
+    moments: { time: string; title: string; detail: string }[];
   };
   rsvp: {
     whatsappNumber: string;
@@ -48,7 +48,7 @@ export const weddingEvent: WeddingEventConfig = {
     venueName: "Salón",
     addressLine: "Ubicación del salón",
     city: "Rincón de Romos",
-    mapUrl: "https://maps.google.com/?q=22.225721,-102.329567",
+    mapUrl: "https://maps.google.com/?q=22.225556,-102.329639",
   },
   story: {
     eyebrow: "Nuestra historia",
@@ -58,12 +58,33 @@ export const weddingEvent: WeddingEventConfig = {
       "Hoy firmamos ese compromiso delante de quienes más queremos. Nos gustaría que fueras parte de este día.",
     ],
   },
-  dressCode: {
-    eyebrow: "Código de vestimenta",
-    title: "Elegancia mediterránea",
+  itinerary: {
+    eyebrow: "El día",
+    title: "Así fluirá la celebración",
     description:
-      "Elegante casual. Paleta de blanco frío, azul cobalto y verde olivo. Evita el negro y los estampados muy llamativos.",
-    palette: ["Blanco frío", "Azul cielo", "Cobalto", "Olivo suave", "Verde oliva", "Olivo profundo"],
+      "Un recorrido sencillo para que sepas cuándo llegar y cómo se irá abriendo la fiesta.",
+    moments: [
+      {
+        time: "16:00",
+        title: "Ceremonia civil",
+        detail: "Nos vemos para firmar y celebrar el sí delante de quienes más queremos.",
+      },
+      {
+        time: "17:00",
+        title: "Brindis",
+        detail: "Un primer brindis para empezar la tarde con cariño y buena compañía.",
+      },
+      {
+        time: "18:30",
+        title: "Cena",
+        detail: "Mesa compartida, conversación y el ritmo pausado de una buena comida.",
+      },
+      {
+        time: "20:00",
+        title: "Baile",
+        detail: "Música, pista libre y la noche abierta hasta que el cuerpo aguante.",
+      },
+    ],
   },
   rsvp: {
     whatsappNumber: "524651093307",

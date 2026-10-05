@@ -17,7 +17,7 @@ const EXIT_MS = 1200;
 const EASE_OUT = [0.76, 0, 0.24, 1] as const;
 const EASE_FLUID = [0.32, 0.72, 0, 1] as const;
 
-const PANEL_TONES = ["#143560", "#1a426f", "#163a6b", "#1e4a82"] as const;
+const PANEL_TONES = ["#354024", "#3f4a2c", "#4a5630", "#556338"] as const;
 
 type Phase = "count" | "exit";
 

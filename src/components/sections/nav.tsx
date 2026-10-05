@@ -12,7 +12,7 @@ const LINKS = [
   { id: "historia", label: "Nuestra historia" },
   { id: "galeria", label: "Galería" },
   { id: "detalles", label: "Detalles" },
-  { id: "vestimenta", label: "Vestimenta" },
+  { id: "itinerario", label: "Itinerario" },
 ];
 
 const MONOGRAM = `${weddingEvent.couple.first[0]}${weddingEvent.couple.second[0]}`;
