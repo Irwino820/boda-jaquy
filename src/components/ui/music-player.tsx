@@ -5,36 +5,25 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { music } from "@/config/music";
 
 const FADE_IN_MS = 2200;
-const STORAGE_KEY = "pj-music";
-/** Eventos que cuentan como gesto del usuario para que el navegador permita reproducir. */
-const GESTURE_EVENTS = ["pointerup", "touchend", "keydown", "click"] as const;
-
-function readPreference() {
-  try {
-    return window.localStorage.getItem(STORAGE_KEY);
-  } catch {
-    return null;
-  }
-}
-
-function savePreference(value: "on" | "off") {
-  try {
-    window.localStorage.setItem(STORAGE_KEY, value);
-  } catch {
-    // Almacenamiento bloqueado (modo privado): la preferencia solo dura la visita.
-  }
-}
+/** Gestos que desbloquean audio (política de autoplay del navegador). */
+const GESTURE_EVENTS = [
+  "pointerdown",
+  "touchstart",
+  "keydown",
+  "click",
+] as const;
 
 /**
- * Música de fondo. Intenta sonar al terminar la cortinilla; si el navegador lo
- * bloquea (política de autoplay), arranca con el primer gesto del invitado.
- * Si el invitado la pausa, no vuelve a sonar sola, ni en visitas posteriores.
+ * Música de fondo. Siempre intenta sonar (sin persistir preferencia off).
+ * Desbloquea con el primer toque y arranca en cuanto `ready` lo permite.
  */
 export function MusicPlayer({ ready }: { ready: boolean }) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const fadeFrame = useRef(0);
   const pausedByUser = useRef(false);
   const resumeOnVisible = useRef(false);
+  const unlocked = useRef(false);
+  const starting = useRef(false);
 
   const [playing, setPlaying] = useState(false);
   const [blocked, setBlocked] = useState(false);
@@ -51,11 +40,28 @@ export function MusicPlayer({ ready }: { ready: boolean }) {
 
     const step = (now: number) => {
       const progress = Math.min(1, (now - startedAt) / duration);
-      // Clamp: la interpolación float puede salir de [0, 1] por epsilon.
       audio.volume = Math.min(1, Math.max(0, from + (goal - from) * progress));
       if (progress < 1) fadeFrame.current = requestAnimationFrame(step);
     };
     fadeFrame.current = requestAnimationFrame(step);
+  }, []);
+
+  /** Desbloquea el elemento de audio con un play silencioso (gesto del usuario). */
+  const unlockAudio = useCallback(async () => {
+    const audio = audioRef.current;
+    if (!audio || unlocked.current) return;
+    unlocked.current = true;
+
+    try {
+      audio.muted = true;
+      audio.volume = 0;
+      await audio.play();
+      audio.pause();
+      audio.currentTime = 0;
+      audio.muted = false;
+    } catch {
+      // Si falla el prime, igual marcamos unlocked: el play real se reintenta luego.
+    }
   }, []);
 
   /** Devuelve `true` si empezó a sonar (o ya sonaba). */
@@ -63,59 +69,104 @@ export function MusicPlayer({ ready }: { ready: boolean }) {
     const audio = audioRef.current;
     if (!audio) return false;
     if (!audio.paused) return true;
+    if (pausedByUser.current) return false;
+    if (starting.current) return false;
 
+    starting.current = true;
+    audio.muted = false;
     audio.volume = 0;
+
     try {
+      // Asegura datos en el buffer antes de play (evita fallos intermitentes).
+      if (audio.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) {
+        audio.load();
+        await new Promise<void>((resolve, reject) => {
+          const onReady = () => {
+            cleanup();
+            resolve();
+          };
+          const onError = () => {
+            cleanup();
+            reject(new Error("audio error"));
+          };
+          const cleanup = () => {
+            audio.removeEventListener("canplay", onReady);
+            audio.removeEventListener("error", onError);
+          };
+          audio.addEventListener("canplay", onReady, { once: true });
+          audio.addEventListener("error", onError, { once: true });
+          window.setTimeout(() => {
+            cleanup();
+            resolve();
+          }, 2500);
+        });
+      }
+
       await audio.play();
       fadeTo(music.volume, FADE_IN_MS);
+      setBlocked(false);
       return true;
     } catch {
       return false;
+    } finally {
+      starting.current = false;
     }
   }, [fadeTo]);
 
-  // Intento de arranque automático cuando termina la cortinilla.
+  // Desde el primer paint: cualquier gesto desbloquea y, si ya hay ready, arranca.
   useEffect(() => {
-    if (!ready) return;
-
-    if (readPreference() === "off") {
-      pausedByUser.current = true;
-      return;
+    // Limpia un "off" viejo si quedó de versiones anteriores.
+    try {
+      window.localStorage.removeItem("pj-music");
+    } catch {
+      /* ignore */
     }
 
+    const onGesture = () => {
+      if (pausedByUser.current) return;
+
+      void (async () => {
+        await unlockAudio();
+        if (ready) {
+          const started = await start();
+          if (!started) setBlocked(true);
+        }
+      })();
+    };
+
+    GESTURE_EVENTS.forEach((name) =>
+      window.addEventListener(name, onGesture, { capture: true, passive: true }),
+    );
+
+    return () => {
+      GESTURE_EVENTS.forEach((name) =>
+        window.removeEventListener(name, onGesture, { capture: true }),
+      );
+    };
+  }, [ready, start, unlockAudio]);
+
+  // Cuando termina la cortinilla: intenta autoplay; si no, espera gesto.
+  useEffect(() => {
+    if (!ready) return;
+    if (pausedByUser.current) return;
+
     let cancelled = false;
-    void start().then((started) => {
+
+    void (async () => {
+      // Microtarea + rAF: da tiempo al audio precargado tras el unlock del preloader.
+      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+      if (cancelled) return;
+
+      const started = await start();
       if (!cancelled && !started) setBlocked(true);
-    });
+    })();
 
     return () => {
       cancelled = true;
     };
   }, [ready, start]);
 
-  // Si el navegador bloqueó el autoplay, el primer gesto del invitado la inicia.
-  useEffect(() => {
-    if (!blocked) return;
-
-    function release() {
-      GESTURE_EVENTS.forEach((name) => window.removeEventListener(name, onGesture));
-    }
-
-    function onGesture() {
-      if (pausedByUser.current) return release();
-      void start().then((started) => {
-        if (started) {
-          setBlocked(false);
-          release();
-        }
-      });
-    }
-
-    GESTURE_EVENTS.forEach((name) => window.addEventListener(name, onGesture));
-    return release;
-  }, [blocked, start]);
-
-  // Cortesía: no sigue sonando en una pestaña que el invitado dejó en segundo plano.
+  // Cortesía: pausa en pestaña oculta y reanuda al volver (si no la pausó el invitado).
   useEffect(() => {
     const onVisibility = () => {
       const audio = audioRef.current;
@@ -129,8 +180,12 @@ export function MusicPlayer({ ready }: { ready: boolean }) {
         return;
       }
 
-      if (resumeOnVisible.current && !pausedByUser.current) void start();
-      resumeOnVisible.current = false;
+      if (resumeOnVisible.current && !pausedByUser.current) {
+        resumeOnVisible.current = false;
+        void start();
+      } else {
+        resumeOnVisible.current = false;
+      }
     };
 
     document.addEventListener("visibilitychange", onVisibility);
@@ -139,6 +194,13 @@ export function MusicPlayer({ ready }: { ready: boolean }) {
 
   useEffect(() => {
     const audio = audioRef.current;
+    // Precarga en cuanto monta (mejora el play tras el preloader).
+    try {
+      audio?.load();
+    } catch {
+      /* ignore */
+    }
+
     return () => {
       cancelAnimationFrame(fadeFrame.current);
       audio?.pause();
@@ -151,14 +213,16 @@ export function MusicPlayer({ ready }: { ready: boolean }) {
 
     if (audio.paused) {
       pausedByUser.current = false;
-      savePreference("on");
       setBlocked(false);
-      void start();
+      void (async () => {
+        await unlockAudio();
+        await start();
+      })();
       return;
     }
 
+    // Pausa solo en esta visita; no se persiste.
     pausedByUser.current = true;
-    savePreference("off");
     cancelAnimationFrame(fadeFrame.current);
     audio.pause();
   };
@@ -171,7 +235,7 @@ export function MusicPlayer({ ready }: { ready: boolean }) {
         ref={audioRef}
         src={music.src}
         loop
-        preload="none"
+        preload="auto"
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
         onError={() => setFailed(true)}
@@ -223,17 +287,17 @@ export function MusicPlayer({ ready }: { ready: boolean }) {
                   className={`w-[2px] rounded-full bg-current ${
                     playing ? "eq-bar h-full" : "h-1/3"
                   }`}
-                  style={playing ? { animationDelay: `-${delay}s`, animationDuration: `${0.9 + index * 0.17}s` } : undefined}
+                  style={
+                    playing
+                      ? {
+                          animationDelay: `-${delay}s`,
+                          animationDuration: `${0.9 + index * 0.17}s`,
+                        }
+                      : undefined
+                  }
                 />
               ))}
             </span>
-
-            {playing ? null : (
-              <span
-                aria-hidden
-                className="absolute h-px w-5 -rotate-45 rounded-full bg-current opacity-70"
-              />
-            )}
           </button>
         </motion.div>
       )}
