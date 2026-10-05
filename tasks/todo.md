@@ -1,13 +1,10 @@
-# Fix: galería scroll horizontal en móvil
+# Borrar Itinerario del día
 
 ## Plan
-- [x] Confirmar causa: Lenis + flex `min-width:auto` + transform en motion.div
-- [x] Aplicar `data-lenis-prevent` (docs oficiales Lenis nested scroll)
-- [x] `min-w-0` + `touch-pan-x` en la tira móvil
-- [x] Separar contenedor nativo (móvil) vs motion.div (desktop)
-- [x] Verificar en viewport móvil
+- [x] Quitar sección de `invitation.tsx` y enlace en nav
+- [x] Eliminar tipo y datos `itinerary` en `event.ts`
+- [x] Borrar `itinerary.tsx`
+- [x] Limpiar `photos.dress` y referencias en README
 
 ## Review
-- Overflow solo no bastaba en móvil real / DevTools.
-- Fix final: drag por Pointer Events (`scrollLeft`) + `touch-action: pan-y` + `data-lenis-prevent(-touch)`.
-- Verificado: mouse drag 234px y touch CDP 234px en viewport 390.
+- Itinerario eliminado por completo: UI, config, foto asociada y docs.

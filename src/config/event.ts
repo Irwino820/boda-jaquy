@@ -19,12 +19,6 @@ export type WeddingEventConfig = {
     lines: string[];
     body: string[];
   };
-  itinerary: {
-    eyebrow: string;
-    title: string;
-    description: string;
-    moments: { time: string; title: string; detail: string }[];
-  };
   rsvp: {
     whatsappNumber: string;
     defaultMessage: string;
@@ -56,34 +50,6 @@ export const weddingEvent: WeddingEventConfig = {
     body: [
       "Empezamos sin fecha y sin plan, sólo con la certeza de que queríamos construir algo juntos.",
       "Hoy firmamos ese compromiso delante de quienes más queremos. Nos gustaría que fueras parte de este día.",
-    ],
-  },
-  itinerary: {
-    eyebrow: "El día",
-    title: "Así fluirá la celebración",
-    description:
-      "Un recorrido sencillo para que sepas cuándo llegar y cómo se irá abriendo la fiesta.",
-    moments: [
-      {
-        time: "16:00",
-        title: "Ceremonia civil",
-        detail: "Nos vemos para firmar y celebrar el sí delante de quienes más queremos.",
-      },
-      {
-        time: "17:00",
-        title: "Brindis",
-        detail: "Un primer brindis para empezar la tarde con cariño y buena compañía.",
-      },
-      {
-        time: "18:30",
-        title: "Cena",
-        detail: "Mesa compartida, conversación y el ritmo pausado de una buena comida.",
-      },
-      {
-        time: "20:00",
-        title: "Baile",
-        detail: "Música, pista libre y la noche abierta hasta que el cuerpo aguante.",
-      },
     ],
   },
   rsvp: {

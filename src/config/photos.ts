@@ -17,14 +17,14 @@ export type Photo = {
 export const photos = {
   hero: {
     id: "hero",
-    src: "/photos/pepe-jaquelin-vineyard.jpg",
+    src: "/photos/pepe-jaquelin-vineyard.webp",
     alt: "Pepe y Jaquelin en el viñedo, brindando juntos",
     width: 1200,
     height: 1600,
   },
   storyMain: {
     id: "story-main",
-    src: "/photos/pepe-jaquelin-closeup.jpg",
+    src: "/photos/pepe-jaquelin-closeup.webp",
     alt: "Pepe y Jaquelin frente a frente, con el anillo en primer plano",
     width: 926,
     height: 1108,
@@ -32,7 +32,7 @@ export const photos = {
   },
   storyWide: {
     id: "story-wide",
-    src: "/photos/pepe-jaquelin-garden.jpg",
+    src: "/photos/pepe-jaquelin-garden.webp",
     alt: "Pepe y Jaquelin frente al corazón de rosas",
     width: 923,
     height: 1073,
@@ -40,7 +40,7 @@ export const photos = {
   },
   storyTall: {
     id: "story-tall",
-    src: "/photos/pepe-jaquelin-cellar.jpg",
+    src: "/photos/pepe-jaquelin-cellar.webp",
     alt: "Pepe y Jaquelin en la cava",
     width: 960,
     height: 1280,
@@ -48,23 +48,15 @@ export const photos = {
   },
   venue: {
     id: "venue",
-    src: "/photos/pepe-jaquelin-cellar.jpg",
+    src: "/photos/pepe-jaquelin-cellar.webp",
     alt: "Pepe y Jaquelin en un espacio íntimo para celebrar",
     width: 960,
     height: 1280,
     caption: "El lugar",
   },
-  dress: {
-    id: "dress",
-    src: "/photos/pepe-jaquelin-vineyard.jpg",
-    alt: "Pepe y Jaquelin en el viñedo, el espíritu de la celebración",
-    width: 1200,
-    height: 1600,
-    caption: "El día",
-  },
   portrait: {
     id: "portrait",
-    src: "/photos/pepe-jaquelin-selfie.jpg",
+    src: "/photos/pepe-jaquelin-selfie.webp",
     alt: "Selfie de Pepe y Jaquelin",
     width: 900,
     height: 1600,
@@ -72,14 +64,14 @@ export const photos = {
   },
   galleryWide: {
     id: "gallery-wide",
-    src: "/photos/pepe-jaquelin-garden.jpg",
+    src: "/photos/pepe-jaquelin-garden.webp",
     alt: "Pepe y Jaquelin en el jardín con luces",
     width: 923,
     height: 1073,
   },
   galleryTall: {
     id: "gallery-tall",
-    src: "/photos/pepe-jaquelin-selfie.jpg",
+    src: "/photos/pepe-jaquelin-selfie.webp",
     alt: "Retrato cercano de la pareja",
     width: 900,
     height: 1600,

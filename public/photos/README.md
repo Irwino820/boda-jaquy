@@ -7,7 +7,7 @@ nombres limpios (sin espacios) para URLs estables.
 
 | Archivo | Origen WhatsApp | Uso |
 | --- | --- | --- |
-| `pepe-jaquelin-vineyard.jpg` | `…10.35.38 (1)` | Hero + itinerario |
+| `pepe-jaquelin-vineyard.jpg` | `…10.35.38 (1)` | Hero |
 | `pepe-jaquelin-closeup.jpg` | `…10.34.22` | Historia + galería |
 | `pepe-jaquelin-garden.jpg` | `…10.34.23` | Historia + galería |
 | `pepe-jaquelin-cellar.jpg` | `…10.35.38` | Historia + lugar |
